@@ -15,7 +15,6 @@ class PostsController < ApplicationController
   def create
     form = Posts::CreateService::Input.new(post_params)
     service = Posts::CreateService.perform(form)
-
     if service.success?
       redirect_to :posts
     else
@@ -25,9 +24,13 @@ class PostsController < ApplicationController
   end
 
   def destroy
+
+    SocialContent.find(params[:id]).destroy
+    redirect_to request.referrer
+
     # TODO: add ability to destroy any post
-    # 1. Destroy SocialContent
-    # 2. Destroy related SocialPosts
+    # 1. Destroy SocialContent /done
+    # 2. Destroy related SocialPosts /done
   end
 
   private
